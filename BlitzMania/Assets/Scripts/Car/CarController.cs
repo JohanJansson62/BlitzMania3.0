@@ -2,109 +2,90 @@ using System;
 using UnityEngine;
 
 
-    internal enum CarDriveType
-    {
-        FrontWheelDrive,
-        RearWheelDrive,
-        FourWheelDrive
-    }
-
-    internal enum SpeedType
-    {
-        MPH,
-        KPH
-    }
-
 public class CarController : MonoBehaviour
 {
     [SerializeField]
-    private CarDriveType m_CarDriveType = CarDriveType.FourWheelDrive;
+    private WheelCollider[] m_wheelColliders = new WheelCollider[4];
     [SerializeField]
-    private WheelCollider[] m_WheelColliders = new WheelCollider[4];
-    [SerializeField]
-    private GameObject[] m_WheelMeshes = new GameObject[4];
+    private GameObject[] m_wheelMeshes = new GameObject[4];
     [SerializeField]
     private WheelEffects[] m_WheelEffects = new WheelEffects[4];
     [SerializeField]
-    private Vector3 m_CentreOfMassOffset;
-    [SerializeField]
-    private float m_MaximumSteerAngle;
+    private float m_maximumSteerAngle = 25f;
     [Range(0, 1)]
     [SerializeField]
-    private float m_SteerHelper; // 0 is raw physics , 1 the car will grip in the direction it is facing
+    private float m_steerHelper = 0.644f; // 0 is raw physics , 1 the car will grip in the direction it is facing
     [Range(0, 1)]
     [SerializeField]
-    private float m_TractionControl; // 0 is no traction control, 1 is full interference
+    private float m_tractionControl = 1f; // 0 is no traction control, 1 is full interference
     [SerializeField]
-    private float m_FullTorqueOverAllWheels;
+    private float m_fullTorqueOverAllWheels = 2500f;
     [SerializeField]
-    private float m_ReverseTorque;
+    private float m_reverseTorque = 500f;
+    //[SerializeField]
+    //private float m_maxHandbrakeTorque = 1e+08f;
     [SerializeField]
-    private float m_MaxHandbrakeTorque;
+    private float m_downforce = 1500f;
     [SerializeField]
-    private float m_Downforce = 100f;
+    private float m_topspeed = 300;
     [SerializeField]
-    private SpeedType m_SpeedType;
+    private float m_revRangeBoundary = 1f;
     [SerializeField]
-    private float m_Topspeed = 200;
+    private float m_slipLimit = 0.3f;
     [SerializeField]
-    private static int NoOfGears = 5;
-    [SerializeField]
-    private float m_RevRangeBoundary = 1f;
-    [SerializeField]
-    private float m_SlipLimit;
-    [SerializeField]
-    private float m_BrakeTorque;
+    private float m_brakeTorque = 20000f;
 
-    private Quaternion[] m_WheelMeshLocalRotations;
-    private Vector3 m_Prevpos, m_Pos;
-    private float m_SteerAngle;
-    private int m_GearNum;
-    private float m_GearFactor;
-    private float m_OldRotation;
-    private float m_CurrentTorque;
-    private Rigidbody m_Rigidbody;
-    private const float k_ReversingThreshold = 0.01f;
+    private static int m_noOfGears = 5;
+    private Vector3 m_centreOfMassOffset;
+    private Quaternion[] m_wheelMeshLocalRotations;
+    private Vector3 m_prevpos, m_pos;
+    private float m_steerAngle;
+    private int m_gearNum;
+    private float m_gearFactor;
+    private float m_oldRotation;
+    private float m_currentTorque;
+    private Rigidbody m_rigidbody;
+    private const float m_reversingThreshold = 0.01f;
 
     public bool Skidding { get; private set; }
     public float BrakeInput { get; private set; }
-    public float CurrentSteerAngle { get { return m_SteerAngle; } }
-    public float CurrentSpeed { get { return m_Rigidbody.velocity.magnitude * 2.23693629f; } }
-    public float MaxSpeed { get { return m_Topspeed; } }
+    public float CurrentSteerAngle { get { return m_steerAngle; } }
+    public float CurrentSpeed { get { return m_rigidbody.velocity.magnitude * 2.23693629f; } }
+    public float MaxSpeed { get { return m_topspeed; } }
     public float Revs { get; private set; }
     public float AccelInput { get; private set; }
 
     // Use this for initialization
     private void Start()
     {
-        m_WheelMeshLocalRotations = new Quaternion[4];
+        m_wheelMeshLocalRotations = new Quaternion[4];
         for (int i = 0; i < 4; i++)
         {
-            m_WheelMeshLocalRotations[i] = m_WheelMeshes[i].transform.localRotation;
+            m_wheelMeshLocalRotations[i] = m_wheelMeshes[i].transform.localRotation;
         }
-        m_WheelColliders[0].attachedRigidbody.centerOfMass = m_CentreOfMassOffset;
+        m_wheelColliders[0].attachedRigidbody.centerOfMass = m_centreOfMassOffset;
 
-        m_MaxHandbrakeTorque = float.MaxValue;
+        //m_maxHandbrakeTorque = float.MaxValue;
 
-        m_Rigidbody = GetComponent<Rigidbody>();
-        m_CurrentTorque = m_FullTorqueOverAllWheels - (m_TractionControl * m_FullTorqueOverAllWheels);
+        m_rigidbody = GetComponent<Rigidbody>();
+        m_currentTorque = m_fullTorqueOverAllWheels - (m_tractionControl * m_fullTorqueOverAllWheels);
     }
 
 
     private void GearChanging()
     {
         float f = Mathf.Abs(CurrentSpeed / MaxSpeed);
-        float upgearlimit = (1 / (float)NoOfGears) * (m_GearNum + 1);
-        float downgearlimit = (1 / (float)NoOfGears) * m_GearNum;
+        float upgearlimit = (1 / (float)m_noOfGears) * (m_gearNum + 1);
+        float downgearlimit = (1 / (float)m_noOfGears) * m_gearNum;
 
-        if (m_GearNum > 0 && f < downgearlimit)
+        if (m_gearNum > 0 && f < downgearlimit)
         {
-            m_GearNum--;
+            m_gearNum--;
         }
 
-        if (f > upgearlimit && (m_GearNum < (NoOfGears - 1)))
+        if (f > upgearlimit && (m_gearNum < (m_noOfGears - 1)))
         {
-            m_GearNum++;
+            m_gearNum++;
         }
     }
 
@@ -125,11 +106,11 @@ public class CarController : MonoBehaviour
 
     private void CalculateGearFactor()
     {
-        float f = (1 / (float)NoOfGears);
+        float f = (1 / (float)m_noOfGears);
         // gear factor is a normalised representation of the current speed within the current gear's range of speeds.
         // We smooth towards the 'target' gear factor, so that revs don't instantly snap up or down when changing gear.
-        var targetGearFactor = Mathf.InverseLerp(f * m_GearNum, f * (m_GearNum + 1), Mathf.Abs(CurrentSpeed / MaxSpeed));
-        m_GearFactor = Mathf.Lerp(m_GearFactor, targetGearFactor, Time.deltaTime * 5f);
+        var targetGearFactor = Mathf.InverseLerp(f * m_gearNum, f * (m_gearNum + 1), Mathf.Abs(CurrentSpeed / MaxSpeed));
+        m_gearFactor = Mathf.Lerp(m_gearFactor, targetGearFactor, Time.deltaTime * 5f);
     }
 
 
@@ -138,10 +119,10 @@ public class CarController : MonoBehaviour
         // calculate engine revs (for display / sound)
         // (this is done in retrospect - revs are not used in force/power calculations)
         CalculateGearFactor();
-        var gearNumFactor = m_GearNum / (float)NoOfGears;
-        var revsRangeMin = ULerp(0f, m_RevRangeBoundary, CurveFactor(gearNumFactor));
-        var revsRangeMax = ULerp(m_RevRangeBoundary, 1f, gearNumFactor);
-        Revs = ULerp(revsRangeMin, revsRangeMax, m_GearFactor);
+        var gearNumFactor = m_gearNum / (float)m_noOfGears;
+        var revsRangeMin = ULerp(0f, m_revRangeBoundary, CurveFactor(gearNumFactor));
+        var revsRangeMax = ULerp(m_revRangeBoundary, 1f, gearNumFactor);
+        Revs = ULerp(revsRangeMin, revsRangeMax, m_gearFactor);
     }
 
 
@@ -151,22 +132,22 @@ public class CarController : MonoBehaviour
         {
             Quaternion quat;
             Vector3 position;
-            m_WheelColliders[i].GetWorldPose(out position, out quat);
-            m_WheelMeshes[i].transform.position = position;
-            m_WheelMeshes[i].transform.rotation = quat;
+            m_wheelColliders[i].GetWorldPose(out position, out quat);
+            m_wheelMeshes[i].transform.position = position;
+            m_wheelMeshes[i].transform.rotation = quat;
         }
 
         //clamp input values
         steering = Mathf.Clamp(steering, -1, 1);
         AccelInput = accel = Mathf.Clamp(accel, 0, 1);
         BrakeInput = footbrake = -1 * Mathf.Clamp(footbrake, -1, 0);
-        handbrake = Mathf.Clamp(handbrake, 0, 1);
+        //handbrake = Mathf.Clamp(handbrake, 0, 1);
 
         //Set the steer on the front wheels.
         //Assuming that wheels 0 and 1 are the front wheels.
-        m_SteerAngle = steering * m_MaximumSteerAngle;
-        m_WheelColliders[0].steerAngle = m_SteerAngle;
-        m_WheelColliders[1].steerAngle = m_SteerAngle;
+        m_steerAngle = steering * m_maximumSteerAngle;
+        m_wheelColliders[0].steerAngle = m_steerAngle;
+        m_wheelColliders[1].steerAngle = m_steerAngle;
 
         SteerHelper();
         ApplyDrive(accel, footbrake);
@@ -174,12 +155,12 @@ public class CarController : MonoBehaviour
 
         //Set the handbrake.
         //Assuming that wheels 2 and 3 are the rear wheels.
-        if (handbrake > 0f)
-        {
-            var hbTorque = handbrake * m_MaxHandbrakeTorque;
-            m_WheelColliders[2].brakeTorque = hbTorque;
-            m_WheelColliders[3].brakeTorque = hbTorque;
-        }
+        //if (handbrake > 0f)
+        //{
+        //    var hbTorque = handbrake * m_maxHandbrakeTorque;
+        //    m_wheelColliders[2].brakeTorque = hbTorque;
+        //    m_wheelColliders[3].brakeTorque = hbTorque;
+        //}
 
 
         CalculateRevs();
@@ -193,61 +174,34 @@ public class CarController : MonoBehaviour
 
     private void CapSpeed()
     {
-        float speed = m_Rigidbody.velocity.magnitude;
-        switch (m_SpeedType)
-        {
-            case SpeedType.MPH:
+        float speed = m_rigidbody.velocity.magnitude;
 
-                speed *= 2.23693629f;
-                if (speed > m_Topspeed)
-                    m_Rigidbody.velocity = (m_Topspeed / 2.23693629f) * m_Rigidbody.velocity.normalized;
-                break;
-
-            case SpeedType.KPH:
-                speed *= 3.6f;
-                if (speed > m_Topspeed)
-                    m_Rigidbody.velocity = (m_Topspeed / 3.6f) * m_Rigidbody.velocity.normalized;
-                break;
-        }
+        speed *= 2.23693629f;
+        if (speed > m_topspeed)
+            m_rigidbody.velocity = (m_topspeed / 2.23693629f) * m_rigidbody.velocity.normalized;
     }
-
 
     private void ApplyDrive(float accel, float footbrake)
     {
 
         float thrustTorque;
-        switch (m_CarDriveType)
+        thrustTorque = accel * (m_currentTorque / 4f);
+        for (int i = 0; i < 4; i++)
         {
-            case CarDriveType.FourWheelDrive:
-                thrustTorque = accel * (m_CurrentTorque / 4f);
-                for (int i = 0; i < 4; i++)
-                {
-                    m_WheelColliders[i].motorTorque = thrustTorque;
-                }
-                break;//Check code for acceleration kickstart
-
-            case CarDriveType.FrontWheelDrive:
-                thrustTorque = accel * (m_CurrentTorque / 2f);
-                m_WheelColliders[0].motorTorque = m_WheelColliders[1].motorTorque = thrustTorque;
-                break;
-
-            case CarDriveType.RearWheelDrive:
-                thrustTorque = accel * (m_CurrentTorque / 2f);
-                m_WheelColliders[2].motorTorque = m_WheelColliders[3].motorTorque = thrustTorque;
-                break;
-
+            m_wheelColliders[i].motorTorque = thrustTorque;
         }
+
 
         for (int i = 0; i < 4; i++)
         {
-            if (CurrentSpeed > 5 && Vector3.Angle(transform.forward, m_Rigidbody.velocity) < 50f)
+            if (CurrentSpeed > 5 && Vector3.Angle(transform.forward, m_rigidbody.velocity) < 50f)
             {
-                m_WheelColliders[i].brakeTorque = m_BrakeTorque * footbrake;
+                m_wheelColliders[i].brakeTorque = m_brakeTorque * footbrake;
             }
             else if (footbrake > 0)
             {
-                m_WheelColliders[i].brakeTorque = 0f;
-                m_WheelColliders[i].motorTorque = -m_ReverseTorque * footbrake;
+                m_wheelColliders[i].brakeTorque = 0f;
+                m_wheelColliders[i].motorTorque = -m_reverseTorque * footbrake;
             }
         }
     }
@@ -258,27 +212,27 @@ public class CarController : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             WheelHit wheelhit;
-            m_WheelColliders[i].GetGroundHit(out wheelhit);
+            m_wheelColliders[i].GetGroundHit(out wheelhit);
             if (wheelhit.normal == Vector3.zero)
                 return; // wheels arent on the ground so dont realign the rigidbody velocity
         }
 
         // this if is needed to avoid gimbal lock problems that will make the car suddenly shift direction
-        if (Mathf.Abs(m_OldRotation - transform.eulerAngles.y) < 10f)
+        if (Mathf.Abs(m_oldRotation - transform.eulerAngles.y) < 10f)
         {
-            var turnadjust = (transform.eulerAngles.y - m_OldRotation) * m_SteerHelper;
+            var turnadjust = (transform.eulerAngles.y - m_oldRotation) * m_steerHelper;
             Quaternion velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
-            m_Rigidbody.velocity = velRotation * m_Rigidbody.velocity;
+            m_rigidbody.velocity = velRotation * m_rigidbody.velocity;
         }
-        m_OldRotation = transform.eulerAngles.y;
+        m_oldRotation = transform.eulerAngles.y;
     }
 
 
     // this is used to add more grip in relation to speed
     private void AddDownForce()
     {
-        m_WheelColliders[0].attachedRigidbody.AddForce(-transform.up * m_Downforce *
-                                                     m_WheelColliders[0].attachedRigidbody.velocity.magnitude);
+        m_wheelColliders[0].attachedRigidbody.AddForce(-transform.up * m_downforce *
+                                                     m_wheelColliders[0].attachedRigidbody.velocity.magnitude);
     }
 
 
@@ -293,10 +247,10 @@ public class CarController : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             WheelHit wheelHit;
-            m_WheelColliders[i].GetGroundHit(out wheelHit);
+            m_wheelColliders[i].GetGroundHit(out wheelHit);
 
             // is the tire slipping above the given threshhold
-            if (Mathf.Abs(wheelHit.forwardSlip) >= m_SlipLimit || Mathf.Abs(wheelHit.sidewaysSlip) >= m_SlipLimit)
+            if (Mathf.Abs(wheelHit.forwardSlip) >= m_slipLimit || Mathf.Abs(wheelHit.sidewaysSlip) >= m_slipLimit)
             {
                 m_WheelEffects[i].EmitTyreSmoke();
 
@@ -323,49 +277,27 @@ public class CarController : MonoBehaviour
     private void TractionControl()
     {
         WheelHit wheelHit;
-        switch (m_CarDriveType)
+        for (int i = 0; i < 4; i++)
         {
-            case CarDriveType.FourWheelDrive:
-                // loop through all wheels
-                for (int i = 0; i < 4; i++)
-                {
-                    m_WheelColliders[i].GetGroundHit(out wheelHit);
+            m_wheelColliders[i].GetGroundHit(out wheelHit);
 
-                    AdjustTorque(wheelHit.forwardSlip);
-                }
-                break;
-
-            case CarDriveType.RearWheelDrive:
-                m_WheelColliders[2].GetGroundHit(out wheelHit);
-                AdjustTorque(wheelHit.forwardSlip);
-
-                m_WheelColliders[3].GetGroundHit(out wheelHit);
-                AdjustTorque(wheelHit.forwardSlip);
-                break;
-
-            case CarDriveType.FrontWheelDrive:
-                m_WheelColliders[0].GetGroundHit(out wheelHit);
-                AdjustTorque(wheelHit.forwardSlip);
-
-                m_WheelColliders[1].GetGroundHit(out wheelHit);
-                AdjustTorque(wheelHit.forwardSlip);
-                break;
+            AdjustTorque(wheelHit.forwardSlip);
         }
     }
 
 
     private void AdjustTorque(float forwardSlip)
     {
-        if (forwardSlip >= m_SlipLimit && m_CurrentTorque >= 0)
+        if (forwardSlip >= m_slipLimit && m_currentTorque >= 0)
         {
-            m_CurrentTorque -= 10 * m_TractionControl;
+            m_currentTorque -= 10 * m_tractionControl;
         }
         else
         {
-            m_CurrentTorque += 10 * m_TractionControl;
-            if (m_CurrentTorque > m_FullTorqueOverAllWheels)
+            m_currentTorque += 10 * m_tractionControl;
+            if (m_currentTorque > m_fullTorqueOverAllWheels)
             {
-                m_CurrentTorque = m_FullTorqueOverAllWheels;
+                m_currentTorque = m_fullTorqueOverAllWheels;
             }
         }
     }
