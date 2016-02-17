@@ -1,11 +1,11 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{F1E9E134-67A8-750B-E576-6FF3E3494934}") = "BlitzMania", "Assembly-CSharp-firstpass.csproj", "{DB1176C0-E3B4-BB66-88A5-85FFD47C8580}"
+Project("{F1E9E134-67A8-750B-E576-6FF3E3494934}") = "BlitzMania", "Assembly-CSharp-firstpass-vs.csproj", "{DB1176C0-E3B4-BB66-88A5-85FFD47C8580}"
 EndProject
-Project("{F1E9E134-67A8-750B-E576-6FF3E3494934}") = "BlitzMania", "Assembly-CSharp.csproj", "{C8E38DD3-5DD8-7863-7A00-9D5F987CB7B7}"
+Project("{F1E9E134-67A8-750B-E576-6FF3E3494934}") = "BlitzMania", "Assembly-CSharp-vs.csproj", "{C8E38DD3-5DD8-7863-7A00-9D5F987CB7B7}"
 EndProject
-Project("{F1E9E134-67A8-750B-E576-6FF3E3494934}") = "BlitzMania", "Assembly-CSharp-Editor.csproj", "{B7CFE0E3-E2E4-7FE2-6B06-FDCD9A9C874D}"
+Project("{F1E9E134-67A8-750B-E576-6FF3E3494934}") = "BlitzMania", "Assembly-CSharp-Editor-vs.csproj", "{B7CFE0E3-E2E4-7FE2-6B06-FDCD9A9C874D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,7 +29,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-				GlobalSection(MonoDevelopProperties) = preSolution
+					GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
