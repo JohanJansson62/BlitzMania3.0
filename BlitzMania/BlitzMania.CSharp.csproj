@@ -78,16 +78,18 @@
     <Compile Include="Assets\Scripts\Car\SkidTrail.cs" />
     <Compile Include="Assets\Scripts\Car\Suspension.cs" />
     <Compile Include="Assets\Scripts\Car\WheelEffects.cs" />
+    <Compile Include="Assets\Scripts\Managers\Clock.cs" />
+    <Compile Include="Assets\Scripts\Managers\CrownController.cs" />
+    <Compile Include="Assets\Scripts\Managers\CrownScript.cs" />
+    <Compile Include="Assets\Scripts\Managers\GameReset.cs" />
+    <Compile Include="Assets\Scripts\Managers\GameTimer.cs" />
+    <Compile Include="Assets\Scripts\Managers\Menu.cs" />
+    <Compile Include="Assets\Scripts\Managers\Score.cs" />
+    <Compile Include="Assets\Scripts\Managers\StarGazer.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerFour.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerOne.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerThree.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerTwo.cs" />
-    <Compile Include="Assets\Scripts\WorldObject\Clock.cs" />
-    <Compile Include="Assets\Scripts\WorldObject\GameReset.cs" />
-    <Compile Include="Assets\Scripts\WorldObject\GameTimer.cs" />
-    <Compile Include="Assets\Scripts\WorldObject\Menu.cs" />
-    <Compile Include="Assets\Scripts\WorldObject\Score.cs" />
-    <Compile Include="Assets\Scripts\WorldObject\StarGazer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
