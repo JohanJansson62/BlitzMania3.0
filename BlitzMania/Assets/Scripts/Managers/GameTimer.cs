@@ -30,6 +30,7 @@ public class GameTimer : MonoBehaviour
 	void FixedUpdate ()
     {
         m_timeCount -= Time.deltaTime; //Counts down time per seconds per frame
+        StartCoroutine(StartDelay());
 
         if(m_timeCount <= 0f)
         {

@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class CrownController : MonoBehaviour
 {
-    [SerializeField] private bool m_hasCrown = false;
+    [SerializeField] public bool m_hasCrown = false;
     [Range(1, 4)]
     [SerializeField] private int m_playerNr;
     private bool m_isImmune = false;
     
-    GameObject m_centerCrown;
+    
+    //GameObject m_centerCrown;
 
     [SerializeField]
     GameObject m_thisCrown;
+    [SerializeField]
     Score score;
 
     
     IEnumerator CrownDelay()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         m_isImmune = false;
     }
 
@@ -25,15 +28,19 @@ public class CrownController : MonoBehaviour
     {
         if(m_hasCrown && !m_isImmune)
         {
-            other.gameObject.GetComponent<CrownController>().CrownPickUp();
-            RemoveCrown();
+            CrownController cController = other.gameObject.GetComponent<CrownController>();
+            if (cController != null)
+            {
+                cController.CrownPickUp();
+                RemoveCrown();
+            }
         }
     }
 
 
     void Awake()
     {
-        m_centerCrown = GameObject.FindGameObjectWithTag("Crown"); 
+        //m_centerCrown = GameObject.FindGameObjectWithTag("Crown"); 
     }
 	
 	// Update is called once per frame
@@ -50,6 +57,6 @@ public class CrownController : MonoBehaviour
     {
         m_hasCrown = false;
         m_thisCrown.SetActive(false);
-
+        score.NewPlayerWithCrown(0);
     }
 }

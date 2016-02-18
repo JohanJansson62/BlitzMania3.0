@@ -50,7 +50,8 @@
      <Compile Include="Assets\Scripts\Car\CarAIControl.cs" />
      <Compile Include="Assets\Scripts\Car\CarAudio.cs" />
      <Compile Include="Assets\Scripts\Car\CarController.cs" />
-     <Compile Include="Assets\Scripts\Car\CarSelfRighting.cs" />
+     <Compile Include="Assets\Scripts\Car\CarReset.cs" />
+     <Compile Include="Assets\Scripts\Car\CarStartPos.cs" />
      <Compile Include="Assets\Scripts\Car\CarUserControl.cs" />
      <Compile Include="Assets\Scripts\Car\Mudguard.cs" />
      <Compile Include="Assets\Scripts\Car\SkidTrail.cs" />
@@ -63,6 +64,7 @@
      <Compile Include="Assets\Scripts\Managers\GameReset.cs" />
      <Compile Include="Assets\Scripts\Managers\GameTimer.cs" />
      <Compile Include="Assets\Scripts\Managers\Menu.cs" />
+     <Compile Include="Assets\Scripts\Managers\OutOfMapTrigger.cs" />
      <Compile Include="Assets\Scripts\Managers\Score.cs" />
      <Compile Include="Assets\Scripts\Managers\StarGazer.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerFour.cs" />
