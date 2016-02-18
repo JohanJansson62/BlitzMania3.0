@@ -5,7 +5,11 @@ public class CrownController : MonoBehaviour
 {
     [SerializeField] private bool m_hasCrown = false;
     private bool m_isImmune = false;
-    GameObject m_crown;
+    
+    GameObject m_centerCrown;
+
+    [SerializeField]
+    GameObject m_thisCrown;
 
     
     IEnumerator CrownDelay()
@@ -14,16 +18,34 @@ public class CrownController : MonoBehaviour
         m_isImmune = false;
     }
 
-    void Awake()
+    void OnCollisionEnter(Collision other)
     {
-        m_crown = GameObject.FindGameObjectWithTag("Crown"); 
+        if(m_hasCrown && !m_isImmune)
+        {
+            other.gameObject.GetComponent<CrownController>().CrownPickUp();
+            RemoveCrown();
+        }
     }
 
-    	
+
+    void Awake()
+    {
+        m_centerCrown = GameObject.FindGameObjectWithTag("Crown"); 
+    }
+	
 	// Update is called once per frame
 	public void CrownPickUp ()
     {
         m_hasCrown = true;
-        m_isImmune = true;  
+        m_isImmune = true;
+        StartCoroutine(CrownDelay());
+        m_thisCrown.SetActive(true);
 	}
+
+    public void RemoveCrown()
+    {
+        m_hasCrown = false;
+        m_thisCrown.SetActive(false);
+
+    }
 }
