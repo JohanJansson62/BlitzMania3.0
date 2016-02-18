@@ -236,7 +236,7 @@ public class CarController : MonoBehaviour
     }
 
 
-    // checks if the wheels are spinning and is so does three things
+    //checks if the wheels are spinning and is so does three things
     // 1) emits particles
     // 2) plays tiure skidding sounds
     // 3) leaves skidmarks on the ground
@@ -252,7 +252,7 @@ public class CarController : MonoBehaviour
             // is the tire slipping above the given threshhold
             if (Mathf.Abs(wheelHit.forwardSlip) >= m_slipLimit || Mathf.Abs(wheelHit.sidewaysSlip) >= m_slipLimit)
             {
-                m_WheelEffects[i].EmitTyreSmoke();
+                //m_WheelEffects[i].EmitTyreSmoke();
 
                 // avoiding all four tires screeching at the same time
                 // if they do it can lead to some strange audio artefacts
@@ -264,12 +264,12 @@ public class CarController : MonoBehaviour
             }
 
             //if it wasnt slipping stop all the audio
-            //if (m_WheelEffects[i].PlayingAudio)
-            //{
-            //    m_WheelEffects[i].StopAudio();
-            //}
-            //// end the trail generation
-            //m_WheelEffects[i].EndSkidTrail();
+            if (m_WheelEffects[i].PlayingAudio)
+            {
+                m_WheelEffects[i].StopAudio();
+            }
+            // end the trail generation
+            m_WheelEffects[i].EndSkidTrail();
         }
     }
 
