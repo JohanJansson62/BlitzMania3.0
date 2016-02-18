@@ -145,6 +145,10 @@ Prefab:
       propertyPath: m_playerNr
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11463300, guid: f453b0abcc0077246929d0a6a971b9e9, type: 2}
+      propertyPath: score
+      value: 
+      objectReference: {fileID: 1279959287}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f453b0abcc0077246929d0a6a971b9e9, type: 2}
   m_IsPrefabParent: 0
@@ -177,10 +181,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1374624079}
-  - {fileID: 1279959286}
-  - {fileID: 1504743684}
-  - {fileID: 180698020}
-  - {fileID: 1441109329}
   - {fileID: 1346756743}
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -255,6 +255,7 @@ GameObject:
   - 114: {fileID: 180698023}
   - 114: {fileID: 180698022}
   - 114: {fileID: 180698021}
+  - 114: {fileID: 180698025}
   m_Layer: 5
   m_Name: GreenScoreIndicator
   m_TagString: Untagged
@@ -272,11 +273,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 155795699}
-  m_RootOrder: 3
+  m_Father: {fileID: 1374624079}
+  m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -419, y: 114}
+  m_AnchoredPosition: {x: -31.8892822, y: -136.151489}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &180698021
@@ -332,13 +333,26 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'GRN: '
+  m_Text: 'GRN: 0'
 --- !u!222 &180698024
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 180698019}
+--- !u!114 &180698025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 180698019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feaf97aaa6e96034c8a036dcda1e2eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerNumber: 3
+  m_diplayScore: {fileID: 180698023}
 --- !u!1 &211296399
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,6 +554,7 @@ GameObject:
   - 114: {fileID: 1279959284}
   - 114: {fileID: 1279959283}
   - 114: {fileID: 1279959282}
+  - 114: {fileID: 1279959287}
   m_Layer: 5
   m_Name: RedScoreIndicator
   m_TagString: Untagged
@@ -600,7 +615,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'RED:'
+  m_Text: 'RED: 0'
 --- !u!222 &1279959285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -617,13 +632,26 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 155795699}
-  m_RootOrder: 1
+  m_Father: {fileID: 1374624079}
+  m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -419, y: 179}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -31.8892822, y: -72.151001}
+  m_SizeDelta: {x: 160, y: 32.0009995}
   m_Pivot: {x: .5, y: .5}
+--- !u!114 &1279959287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1279959281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feaf97aaa6e96034c8a036dcda1e2eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerNumber: 1
+  m_diplayScore: {fileID: 1279959284}
 --- !u!1 &1346756738
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,7 +744,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 155795699}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -808, y: 203.170044}
@@ -870,6 +898,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 11418596, guid: bf6351c10c2546f47a77ef892f0d8f24, type: 2}
+      propertyPath: score
+      value: 
+      objectReference: {fileID: 180698025}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bf6351c10c2546f47a77ef892f0d8f24, type: 2}
   m_IsPrefabParent: 0
@@ -947,7 +979,11 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1279959286}
+  - {fileID: 1504743684}
+  - {fileID: 180698020}
+  - {fileID: 1441109329}
   m_Father: {fileID: 155795699}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
@@ -981,6 +1017,7 @@ GameObject:
   - 114: {fileID: 1441109332}
   - 114: {fileID: 1441109331}
   - 114: {fileID: 1441109330}
+  - 114: {fileID: 1441109334}
   m_Layer: 5
   m_Name: PinkScoreIndicator
   m_TagString: Untagged
@@ -998,11 +1035,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 155795699}
-  m_RootOrder: 4
+  m_Father: {fileID: 1374624079}
+  m_RootOrder: 3
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -419, y: 80}
+  m_AnchoredPosition: {x: -31.8892822, y: -170.151489}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1441109330
@@ -1058,13 +1095,26 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'PNK: '
+  m_Text: 'PNK: 0'
 --- !u!222 &1441109333
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1441109328}
+--- !u!114 &1441109334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1441109328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feaf97aaa6e96034c8a036dcda1e2eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerNumber: 4
+  m_diplayScore: {fileID: 1441109332}
 --- !u!1 &1504743683
 GameObject:
   m_ObjectHideFlags: 0
@@ -1077,6 +1127,7 @@ GameObject:
   - 114: {fileID: 1504743687}
   - 114: {fileID: 1504743686}
   - 114: {fileID: 1504743685}
+  - 114: {fileID: 1504743689}
   m_Layer: 5
   m_Name: BluScoreIndicator
   m_TagString: Untagged
@@ -1094,11 +1145,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 155795699}
-  m_RootOrder: 2
+  m_Father: {fileID: 1374624079}
+  m_RootOrder: 1
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -419, y: 147}
+  m_AnchoredPosition: {x: -31.8892822, y: -103.151489}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1504743685
@@ -1154,13 +1205,26 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'BLU:'
+  m_Text: 'BLU: 0'
 --- !u!222 &1504743688
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1504743683}
+--- !u!114 &1504743689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1504743683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feaf97aaa6e96034c8a036dcda1e2eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerNumber: 2
+  m_diplayScore: {fileID: 1504743687}
 --- !u!1001 &1544454625
 Prefab:
   m_ObjectHideFlags: 0
@@ -1200,6 +1264,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 11446920, guid: f64cf9dfcf4adba4993eca8dca7feaa2, type: 2}
+      propertyPath: score
+      value: 
+      objectReference: {fileID: 1504743689}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f64cf9dfcf4adba4993eca8dca7feaa2, type: 2}
   m_IsPrefabParent: 0
@@ -1429,6 +1497,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 11419810, guid: c90e515f6ef704545abd361fb21541ad, type: 2}
+      propertyPath: score
+      value: 
+      objectReference: {fileID: 1441109334}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c90e515f6ef704545abd361fb21541ad, type: 2}
   m_IsPrefabParent: 0
