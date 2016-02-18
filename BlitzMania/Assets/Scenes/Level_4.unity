@@ -1713,6 +1713,10 @@ Prefab:
       propertyPath: m_Name
       value: FloorDefault
       objectReference: {fileID: 0}
+    - target: {fileID: 2348732, guid: dd8a7082bbfb72d498889db2adf13601, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14f9a63da3d816b48b18a91e83f22a52, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd8a7082bbfb72d498889db2adf13601, type: 2}
   m_IsPrefabParent: 0
