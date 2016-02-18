@@ -9,6 +9,7 @@ public class GameTimer : MonoBehaviour
     private float m_maxTimeCount;
     private bool m_playerIsReady = false;
 
+
     IEnumerator StartDelay()
     {
         yield return new WaitForSeconds(3);
