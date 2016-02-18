@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 public class StarGazer : MonoBehaviour {
     private string m_levelToPlay;
@@ -38,12 +38,12 @@ public class StarGazer : MonoBehaviour {
             }
         }
     }
-    public void GoToNextLevel(Toggle sender)
-    {
-        if (sender.isOn)
-        {
-            SceneManager.LoadScene(m_levelToPlay);
-        }
-    }
+    //public void GoToNextLevel(Toggle sender)
+    //{
+    //    if (sender.isOn)
+    //    {
+    //        SceneManager.LoadScene(m_levelToPlay);
+    //    }
+    //}
 
 }

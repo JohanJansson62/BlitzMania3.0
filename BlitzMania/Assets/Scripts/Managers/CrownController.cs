@@ -20,7 +20,7 @@ public class CrownController : MonoBehaviour
     
     IEnumerator CrownDelay()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         m_isImmune = false;
     }
 
