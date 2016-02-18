@@ -9,6 +9,7 @@ public class GameTimer : MonoBehaviour
     private float m_maxTimeCount;
     private bool m_playerIsReady = false;
 
+
     IEnumerator StartDelay()
     {
         yield return new WaitForSeconds(3);
@@ -29,6 +30,7 @@ public class GameTimer : MonoBehaviour
 	void FixedUpdate ()
     {
         m_timeCount -= Time.deltaTime; //Counts down time per seconds per frame
+        StartCoroutine(StartDelay());
 
         if(m_timeCount <= 0f)
         {
