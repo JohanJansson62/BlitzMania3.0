@@ -174,8 +174,8 @@ PlayerSettings:
     m_Icons:
     - serializedVersion: 2
       m_Icon: {fileID: 0}
-      m_Width: 128
-      m_Height: 128
+      m_Width: 27016
+      m_Height: 27016
   m_BuildTargetBatching:
   - m_BuildTarget: Standalone
     m_StaticBatching: 1
@@ -452,6 +452,7 @@ PlayerSettings:
   - WebGL::exceptionSupport
   - WebGL::memorySize
   - iOS::Architecture
+  - iOS::EnableIncrementalBuildSupportForIl2cpp
   - iOS::ScriptingBackend
   Android::ScriptingBackend: 0
   Metro::ScriptingBackend: 2
@@ -462,6 +463,7 @@ PlayerSettings:
   WebGL::exceptionSupport: 0
   WebGL::memorySize: 256
   iOS::Architecture: 2
+  iOS::EnableIncrementalBuildSupportForIl2cpp: 0
   iOS::ScriptingBackend: 2
   boolPropertyNames:
   - WebGL::analyzeBuildSize
