@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OutOfMapTrigger : MonoBehaviour {
+public class OutOfMapTrigger : MonoBehaviour
+{
     
 	void OnTriggerEnter(Collider other)
     {
