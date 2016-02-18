@@ -4,12 +4,15 @@ using System.Collections;
 public class CrownController : MonoBehaviour
 {
     [SerializeField] private bool m_hasCrown = false;
+    [Range(1, 4)]
+    [SerializeField] private int m_playerNr;
     private bool m_isImmune = false;
     
     GameObject m_centerCrown;
 
     [SerializeField]
     GameObject m_thisCrown;
+    Score score;
 
     
     IEnumerator CrownDelay()
@@ -40,6 +43,7 @@ public class CrownController : MonoBehaviour
         m_isImmune = true;
         StartCoroutine(CrownDelay());
         m_thisCrown.SetActive(true);
+        score.NewPlayerWithCrown(m_playerNr); 
 	}
 
     public void RemoveCrown()

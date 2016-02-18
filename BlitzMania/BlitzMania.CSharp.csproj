@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Managers\Clock.cs" />
     <Compile Include="Assets\Scripts\Managers\CrownController.cs" />
     <Compile Include="Assets\Scripts\Managers\CrownScript.cs" />
+    <Compile Include="Assets\Scripts\Managers\CrownTransfer.cs" />
     <Compile Include="Assets\Scripts\Managers\GameReset.cs" />
     <Compile Include="Assets\Scripts\Managers\GameTimer.cs" />
     <Compile Include="Assets\Scripts\Managers\Menu.cs" />
