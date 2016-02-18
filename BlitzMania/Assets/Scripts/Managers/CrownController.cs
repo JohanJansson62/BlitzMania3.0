@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CrownController : MonoBehaviour
 {
-    [SerializeField] private bool m_hasCrown = false;
+    [SerializeField] public bool m_hasCrown = false;
     [Range(1, 4)]
     [SerializeField] private int m_playerNr;
     private bool m_isImmune = false;
