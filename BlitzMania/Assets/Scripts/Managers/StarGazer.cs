@@ -38,12 +38,9 @@ public class StarGazer : MonoBehaviour {
             }
         }
     }
-    public void GoToNextLevel(Toggle sender)
+    public void GoToNextLevel()
     {
-        if (sender.isOn)
-        {
-            SceneManager.LoadScene(m_levelToPlay);
-        }
-    }
+        SceneManager.LoadScene(m_levelToPlay);
 
+    }
 }
