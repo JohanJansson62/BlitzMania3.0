@@ -8,20 +8,20 @@ namespace UnityStandardAssets.Vehicles.Car
 
     public class Mudguard : MonoBehaviour
     {
-        public CarController carController; // car controller to get the steering angle
+        public CarController m_carController; // car controller to get the steering angle
 
-        private Quaternion m_OriginalRotation;
+        private Quaternion m_originalRotation;
 
 
         private void Start()
         {
-            m_OriginalRotation = transform.localRotation;
+            m_originalRotation = transform.localRotation;
         }
 
 
         private void Update()
         {
-            transform.localRotation = m_OriginalRotation*Quaternion.Euler(0, carController.CurrentSteerAngle, 0);
+            transform.localRotation = m_originalRotation*Quaternion.Euler(0, m_carController.CurrentSteerAngle, 0);
         }
     }
 }

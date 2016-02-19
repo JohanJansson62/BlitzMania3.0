@@ -68,13 +68,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Car\BrakeLight.cs" />
-    <Compile Include="Assets\Scripts\Car\CarAIControl.cs" />
     <Compile Include="Assets\Scripts\Car\CarAudio.cs" />
     <Compile Include="Assets\Scripts\Car\CarController.cs" />
     <Compile Include="Assets\Scripts\Car\CarReset.cs" />
     <Compile Include="Assets\Scripts\Car\CarStartPos.cs" />
-    <Compile Include="Assets\Scripts\Car\CarUserControl.cs" />
     <Compile Include="Assets\Scripts\Car\Mudguard.cs" />
     <Compile Include="Assets\Scripts\Car\SkidTrail.cs" />
     <Compile Include="Assets\Scripts\Car\Suspension.cs" />

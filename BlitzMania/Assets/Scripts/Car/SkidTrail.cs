@@ -6,7 +6,7 @@ namespace UnityStandardAssets.Vehicles.Car
 {
     public class SkidTrail : MonoBehaviour
     {
-        [SerializeField] private float m_PersistTime;
+        [SerializeField] private float m_persistTime;
 
 
         private IEnumerator Start()
@@ -17,7 +17,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
                 if (transform.parent.parent == null)
                 {
-					Destroy(gameObject, m_PersistTime);
+					Destroy(gameObject, m_persistTime);
                 }
             }
         }

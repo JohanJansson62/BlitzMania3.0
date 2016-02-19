@@ -10,21 +10,21 @@ public class CarReset : MonoBehaviour
     [SerializeField]
     GameObject m_crown_PickUp;
     [SerializeField]
-    private float m_WaitTime = 3f;           // time to wait before self righting
+    private float m_waitTime = 3f;           // time to wait before self righting
     [SerializeField]
-    private float m_VelocityThreshold = 1f;  // the velocity below which the car is considered stationary for self-righting
+    private float m_velocityThreshold = 1f;  // the velocity below which the car is considered stationary for self-righting
     CrownController m_crownController;
   
     private CarStartPos m_startPos;
 
 
     private float m_LastOkTime; // the last time that the car was in an OK state
-    private Rigidbody m_Rigidbody;
+    private Rigidbody m_rigidbody;
 
 
     private void Start()
     {
-        m_Rigidbody = GetComponent<Rigidbody>();
+        m_rigidbody = GetComponent<Rigidbody>();
         m_startPos = GetComponent<CarStartPos>();
         m_crownController = GetComponent<CrownController>();
     }
@@ -33,12 +33,12 @@ public class CarReset : MonoBehaviour
     private void Update()
     {
         // is the car is the right way up
-        if (transform.up.y > 0f || m_Rigidbody.velocity.magnitude > m_VelocityThreshold)
+        if (transform.up.y > 0f || m_rigidbody.velocity.magnitude > m_velocityThreshold)
         {
             m_LastOkTime = Time.time;
         }
 
-        if (Time.time > m_LastOkTime + m_WaitTime)
+        if (Time.time > m_LastOkTime + m_waitTime)
         {
             CarReseter();
         }
