@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class Clock : MonoBehaviour
 {
+
+    [SerializeField] GameObject m_bobOmb;
     private float m_timer;
     private Text m_displayTime;
 
@@ -27,7 +29,10 @@ public class Clock : MonoBehaviour
         m_timer -= Time.deltaTime; ;//removes the time since last update
         m_displayTime.text = "Time Left = " + m_timer.ToString().Substring(0,3) + "\n \n";//the \n means it's a new line
         
-
+        if(m_timer <= 3)
+        {
+            m_bobOmb.SetActive(true);
+        }
     }
 
     
