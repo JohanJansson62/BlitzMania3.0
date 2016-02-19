@@ -19,7 +19,7 @@ public class Clock : MonoBehaviour
         }
         else
         {
-            m_timer = 300;//or is set to a default value
+            m_timer = 60;//or is set to a default value
         }
 
     }
@@ -29,7 +29,7 @@ public class Clock : MonoBehaviour
         m_timer -= Time.deltaTime; ;//removes the time since last update
         m_displayTime.text = "Time Left = " + m_timer.ToString().Substring(0,3) + "\n \n";//the \n means it's a new line
         
-        if(m_timer <= 3)
+        if(m_timer <= 7)
         {
             m_bobOmb.SetActive(true);
         }
