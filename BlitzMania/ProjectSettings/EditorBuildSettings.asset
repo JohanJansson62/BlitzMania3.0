@@ -10,12 +10,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AdvancedStart.unity
   - enabled: 1
-    path: Assets/Scenes/Level_1.unity
+    path: Assets/Scenes/Level_5.unity
   - enabled: 1
     path: Assets/Scenes/Level_2.unity
   - enabled: 1
     path: Assets/Scenes/Level_3.unity
   - enabled: 1
-    path: Assets/Scenes/Level_4.unity
+    path: Assets/Scenes/Level_1.unity
   - enabled: 1
     path: Assets/Scenes/Level_6.unity
